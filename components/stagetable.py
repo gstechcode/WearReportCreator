@@ -10,7 +10,6 @@ class stagetable:
         self.tabelaSuperior.grid(row=1,column=1, padx="10px");
         self.tabelaInferior= self.createTable(supOrInf="inf");
         self.tabelaInferior.grid(row=1,column=2, padx="10px");
-        print(self.mapObjects);
         
     def createTable(self, supOrInf) -> Frame:
         localFrame= Frame(self.parentFrame, bg="orange");
@@ -38,7 +37,7 @@ class stagetable:
             #Cria as Entrys da Matriz Tabela
             for celula in self.indiceYTop:
                 for coluna in self.indiceX:
-                    self.mapObjects[celula + "_" + str(coluna)] = Entry(localFrame, width= 5, relief="flat", borderwidth=1, highlightbackground = "black", highlightthickness = 0.5);
+                    self.mapObjects[celula + "_" + str(coluna)] = Entry(localFrame, width= 5, relief="flat", borderwidth=1, justify="center", highlightbackground = "black", highlightthickness = 0.5);
                     self.mapObjects[celula + "_" + str(coluna)].grid(row= rowAux, column= columnAux);
                     columnAux += 1
                 rowAux += 1;
