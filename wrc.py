@@ -1,9 +1,8 @@
 from _tkinter import TclError
-from modules.wrcgui import wrcgui;
+from views.formularioinicial import formularioinicialapp;
 
 class WRC:
     def __init__(self):
-        self.gui= wrcgui();
-        self.gui.MainRoot();
+        self.gui= formularioinicialapp();
         
 root= WRC();

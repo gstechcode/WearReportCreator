@@ -1,4 +1,8 @@
 from tkinter import *
+import PIL
+import os
+from PIL import ImageFont
+from pillowdrawtable.drawtable import Drawtable
 
 class stagetable:
     def __init__(self, parent: Frame, interval: list):
@@ -66,6 +70,10 @@ class stagetable:
         
         
     def __defineglobals__(self): # função por responsável por definir as variáveis globais
+        try:
+            os.mkdir(os.environ["USERPROFILE"] + "\\WRC");
+        except Exception:
+            pass
         widgets_height= 15;
         self.mapObjects= {};
         self.indiceX= self.getInterval();
@@ -78,4 +86,74 @@ class stagetable:
             interval.append(i);
             
         return interval;
+    
+
+    def generatePNGS(self, op):
+        self.text_font =   PIL.ImageFont.truetype("arial.ttf", 20) #PIL.ImageFont.truetype(FONT_PATH,FONTSIZE)
+        self.header_font =   PIL.ImageFont.truetype("arial.ttf", 20)
+        
+        tdata= [[""],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]];
+        aux=0 
+        
+        print(self.indiceX)
+        
+        if(op == "sup"):
+            filename= os.environ["USERPROFILE"] + "\\WRC\\sup.png";
+            for cell in self.indiceX:
+                tdata[0].append(cell);
+            for item in tdata:
+                if(aux == 0):
+                    pass
+                else:
+                    tdata[aux].append(self.indiceYTop[aux-1]);
+                aux += 1
+            for cell in self.mapObjects:
+                for item in tdata:
+                    if(cell.split("_")[0] in item[0]):
+                        item.append(self.mapObjects[cell].get());
+                        
+                        
+        else:
+            filename= os.environ["USERPROFILE"] + "\\WRC\\inf.png";
+            for cell in self.indiceX:
+                tdata[0].append(cell);
+            for item in tdata:
+                if(aux == 0):
+                    pass
+                else:
+                    tdata[aux].append(self.indiceYBottom[aux-1]);
+                aux += 1
+            for cell in self.mapObjects:
+                for item in tdata:
+                    if(cell.split("_")[0] in item[0]):
+                        item.append(self.mapObjects[cell].get());
+    
+        
+                
+        print(tdata);
+        
+        
+        table = Drawtable(
+            data=tdata,
+            x=0,
+            xend=1714,
+            y=0,
+            font=self.text_font,
+            line_spacer=16,
+            margin_text=10,
+            image_width=1714,
+            image_height=550,
+            frame=True,
+            grid=True,
+            columngrid=True,
+            rowgrid=True,
+            header=True,
+            text_color='black',
+            header_color='black',
+            headerfont=self.header_font,
+            save= filename,
+            kwargs= {"text_align": "center", "anchor": "c"}
+        );
+    
+        table.draw_table()
     
